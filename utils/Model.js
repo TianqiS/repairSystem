@@ -20,3 +20,5 @@ Model.prototype.updateItem = function(query, updateInfo) {
   return this.getItem(query).update(updateInfo);
 }
 
+module.exports = Model;
+

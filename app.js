@@ -6,7 +6,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
-const register = require('./routes/register')
+const common = require('./routes/common')
 const users = require('./routes/users')
 
 // error handler
@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(register.routes(), register.allowedMethods())
+app.use(common.routes(), common.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 
 // error-handling
