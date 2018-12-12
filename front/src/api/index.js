@@ -1,9 +1,10 @@
 import Vue from 'vue'
+import qs from 'qs'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '../router/index'
 // 配置API接口地址
-//var root = '/api'  //开发环境
+var root = 'http://localhost:3000'  //开发环境
 var root2=''   //生产环境
 // var root1=(function(){
 //     //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp  
@@ -59,11 +60,10 @@ function apiAxios (method, url, params, success, failure) {
   axios({
     method: method,
     url: url,
-    data: method === 'POST' ||method === 'GET' ? params : null,
-    params: method === 'POST' ||method === 'GET' ? params : null,
-    headers: method === 'GET'? {'Content-Type': 'application/vnd.ms-excel'}: null,
-    baseURL: root2,
-    withCredentials: true
+    data: method === 'POST' ? qs.stringify(params) : null,
+    params: method === 'GET' ? params : null,
+    headers: method === 'GET'? {'Content-Type': 'application/vnd.ms-excel'}: {'Content-Type': 'application/x-www-form-urlencoded'},
+    baseURL: root,
   })
   .then(function (res) {
     if(res.data.code=="-1"){

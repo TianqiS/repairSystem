@@ -16,7 +16,7 @@
                 <li><input type="text" placeholder="工号" v-model="registerInfo.staffId"></li>
             </ul>
             <div class="loginInfo_bottom">
-                <router-link to="" class="register">注册</router-link>
+                <button  class="register button" @click="register">注册</button>
                 <span>已查看并同意注册条款</span>
             </div>
         </div>
@@ -41,6 +41,27 @@
         }
       }
     },
-    methods: {}
+    methods: {
+      register: function () {
+        const {
+          phoneNum: phone,
+          password,
+          name,
+          unitInfo,
+          workAddress,
+          staffId
+        } = this.registerInfo;
+        this.$api.post('/common/repairemanRegister', {
+          phone,
+          password,
+          name,
+          unitInfo,
+          workAddress,
+          staffId,
+        }, () => {
+          return this.$router.push('login');
+        })
+      }
+    }
   }
 </script>
