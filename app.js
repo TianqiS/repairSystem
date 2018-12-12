@@ -2,15 +2,15 @@ const Koa = require('koa')
 const cors = require('koa2-cors')
 const app = new Koa()
 const json = require('koa-json')
-const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const middleware = require('./utils/middleware');
 
 const common = require('./routes/common')
 const users = require('./routes/users')
 
 // error handler
-onerror(app)
+app.use(middleware.errorHandle);
 
 app.use(cors());
 // middlewares

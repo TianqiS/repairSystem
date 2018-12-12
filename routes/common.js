@@ -14,10 +14,7 @@ router.post('/repairemanLogin', async (ctx, next) => {
     }
   }
 
-  ctx.body = {
-    code: -2,
-    msg: '用户名或密码输入错误',
-  }
+  throw 40001;
 })
 
 router.post('/repairemanRegister', async function(ctx, next) {
