@@ -5,7 +5,7 @@
             <h2>账号登录</h2>
             <ul>
                 <li><input type="text" placeholder="手机号" v-model="loginInfo.phone"></li>
-                <li><input type="password" placeholder="密码" v-model="loginInfo.pwd"></li>
+                <li><input type="password" placeholder="密码" v-model="loginInfo.password"></li>
             </ul>
             <div class="loginInfo_center">
                 <router-link to="/forgot">忘记密码?</router-link>
@@ -33,18 +33,15 @@ export default {
         },
        loginInfo:{
            phone:'',
-           pwd:"",
+           password:"",
        }
   	}
   },
   methods:{
       loginIn:function(){
-        this.loginInfo.pwd= b64_md5(this.loginInfo.pwd);
-        console.log(this.loginInfo)
-        this.$api.get('/login/login', this.loginInfo, r => {
-            console.log(r)
-            if(r.success){
-                
+        this.$api.post('/common/repairemanLogin', this.loginInfo, r => {
+            if(r.status === 'success'){
+              this.$router.push('myInfo');
             }
         });
       },
