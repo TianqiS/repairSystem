@@ -66,41 +66,27 @@ function apiAxios (method, url, params, success, failure) {
     baseURL: root,
   })
   .then(function (res) {
-    if(res.data.code=="-1"){
-        ElementUI.Message.warning("请登录系统");
-        router.push({path:'/login'});
-    }
-    if(res.data.code=="-2"){
-        ElementUI.Message.warning(res.data.msg);
-    }
-    if(res.data.code=="-9"){
-        ElementUI.Message.warning(res.data.msg);
-    }
     if(success){
       success(res.data);
     }
-    // if(failure){
-    //   failure(res.data);
-    // }
-    // if (res.data.success === true) {
-    //   //console.log("success:"+ JSON.stringify(res.data))
-    //   if (success) {
-    //     success(res.data)
-    //   }
-    // } else {
-    //   if (failure) {
-    //     failure(res.data)
-    //   } else {
-    //    // console.log('error: ' + JSON.stringify(res.data))
-    //   }
-    // }
   })
-  .catch(function (err) {
-    let res = err.response
-    if (err&&failure) {
-      failure(res);
-      //console.log('api error, HTTP CODE: ' + res.status)
+  .catch(err => {
+
+    if(err.response.data.code ==="-1"){
+      ElementUI.Message.warning("请登录系统");
+      router.push({path:'/login'});
     }
+    if(err.response.data.code ==="-2"){
+      ElementUI.Message.warning(err.response.data.msg);
+    }
+    if(err.response.data.code ==="-9"){
+      ElementUI.Message.warning(err.response.data.msg);
+    }
+    // let res = err.response
+    // if (err&&failure) {
+    //   failure(res);
+      //console.log('api error, HTTP CODE: ' + res.status)
+    // }
   })
 }
 
