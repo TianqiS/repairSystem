@@ -6,11 +6,13 @@ const encryption = require('../utils/md5');
 
 router.post('/repairemanLogin', async (ctx, next) => {
   const { phone, password } = ctx.request.body;
-  const repairemanPassword = (await repairemanModule.getRepairemanInfo({ phone })).password;
+  const repairemanInfo = (await repairemanModule.getRepairemanInfo({ phone }));
   const md5Password = encryption.b64_md5(password);
-  if(md5Password === repairemanPassword) {
+  if(md5Password === repairemanInfo.password) {
+    delete repairemanInfo.password;
     return ctx.body = {
-      status: 'success'
+      status: 'success',
+      msg: repairemanInfo
     }
   }
 
