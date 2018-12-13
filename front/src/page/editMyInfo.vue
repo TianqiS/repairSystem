@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="lon_top">
-            <router-link to="/" class="left"><img src="static/images/left.png"></router-link>
+            <router-link to="/myInfo" class="left"><img src="static/images/left.png"></router-link>
             <span>我的资料</span>
             <router-link to="" class="cha"><img src="static/images/cha.png"></router-link>
         </div>
