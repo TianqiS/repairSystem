@@ -34,16 +34,20 @@
 
 export default {
   created () {
-      
+    this.getRepairmanInfo();
  },
- data(){
-  
+ data() {
   	return {
-       
+       repairmanInfo: {},
   	}
   },
   methods:{
-      
+      getRepairmanInfo() {
+        this.$api.get('/user/repairmanInfo', repairmanInfo => {
+          this.repairmanInfo = repairmanInfo;
+          console.log(repairmanInfo);
+        })
+      }
   }
 }
 </script>

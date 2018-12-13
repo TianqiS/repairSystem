@@ -1,18 +1,20 @@
 const router = require('koa-router')({
   prefix: '/common',
 })
-const repairemanModule = require('../module/repaireman');
+const repairmanModule = require('../module/repairman');
 const encryption = require('../utils/md5');
 
 router.post('/repairmanLogin', async (ctx, next) => {
   const { phone, password } = ctx.request.body;
-  const repairemanInfo = (await repairemanModule.getRepairemanInfo({ phone }));
+  const repairmanInfo = (await repairmanModule.getRepairmanInfo({ phone }));
   const md5Password = encryption.b64_md5(password);
-  if(md5Password === repairemanInfo.password) {
-    delete repairemanInfo.password;
+  if(md5Password === repairmanInfo.password) {
+    delete repairmanInfo.password;
+    ctx.session.repairmanInfo = repairmanInfo;
+    ctx.session.userType = 'repairman';
     return ctx.body = {
       status: 'success',
-      msg: repairemanInfo
+      msg: repairmanInfo
     }
   }
 
@@ -29,7 +31,7 @@ router.post('/repairmanRegister', async function(ctx, next) {
     workAddress: work_address,
   } = ctx.request.body;
 
-  await repairemanModule.addNewRepaireman({
+  await repairmanModule.addNewRepairman({
     staffId: staffId,
     name: name,
     phone: phone,

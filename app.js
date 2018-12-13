@@ -17,6 +17,9 @@ app.use(cors());
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))
+app.use(middleware.koaSession({
+  key: 'repairSystem'
+}))
 app.use(json())
 app.use(logger())
 // app.use(require('koa-static')(__dirname + '/public'))

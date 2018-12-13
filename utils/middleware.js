@@ -1,3 +1,4 @@
+const session = require('koa-session-minimal');
 const errorList = require('../errorList.json');
 
 exports.errorHandle = async function (ctx, next) {
@@ -22,3 +23,5 @@ exports.errorHandle = async function (ctx, next) {
     }
   }
 }
+
+exports.koaSession = session;

@@ -1,13 +1,13 @@
-const repairemanModel = require('../model/repaireman');
+const repairmanModel = require('../model/repairman');
 
-exports.getRepairemanInfo = async function(phone) {
-  return await repairemanModel.getItem(phone).first().catch(err => {
+exports.getRepairmanInfo = async function(phone) {
+  return await repairmanModel.getItem(phone).first().catch(err => {
     if(err) throw err;
   });
 }
 
-exports.addNewRepaireman = async function(information) {
-  return await repairemanModel.insertItem({...information}).catch(err => {
+exports.addNewRepairman = async function(information) {
+  return await repairmanModel.insertItem({...information}).catch(err => {
     if(err) throw err;
   })
 }

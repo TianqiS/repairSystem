@@ -1,13 +1,14 @@
-const router = require('koa-router')()
-
-router.prefix('/users')
-
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
+const router = require('koa-router')({
+  prefix: '/users',
 })
 
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
+router.get('/repairmanInfo', async function(ctx, next) {
+  const repairmanInfo = ctx.session.repairmanInfo;
+  if(!repairmanInfo) throw 40003;
+  return ctx.body = {
+    status: 'success',
+    repairmanInfo
+  }
 })
 
 module.exports = router
