@@ -64,6 +64,7 @@ function apiAxios (method, url, params, success, failure) {
     params: method === 'GET' ? params : null,
     headers: method === 'GET'? {'Content-Type': 'application/vnd.ms-excel'}: {'Content-Type': 'application/x-www-form-urlencoded'},
     baseURL: root,
+    withCredentials: true,
   })
   .then(function (res) {
     if(success){

@@ -12,7 +12,9 @@ const users = require('./routes/users')
 // error handler
 app.use(middleware.errorHandle);
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+}));
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
