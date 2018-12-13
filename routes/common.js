@@ -19,7 +19,7 @@ router.post('/repairmanLogin', async (ctx, next) => {
   throw 40001;
 })
 
-router.post('/repairemaRegister', async function(ctx, next) {
+router.post('/repairmanRegister', async function(ctx, next) {
   const {
     staffId,
     name,
