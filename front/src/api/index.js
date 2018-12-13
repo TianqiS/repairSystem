@@ -71,22 +71,20 @@ function apiAxios (method, url, params, success, failure) {
     }
   })
   .catch(err => {
-
-    if(err.response.data.code ==="-1"){
+    const errInfo = err.response.data
+    if(errInfo.code ==="-1"){
       ElementUI.Message.warning("请登录系统");
       router.push({path:'/login'});
     }
-    if(err.response.data.code ==="-2"){
-      ElementUI.Message.warning(err.response.data.msg);
+    if(errInfo.code ==="-2"){
+      ElementUI.Message.warning(errInfo.msg);
     }
-    if(err.response.data.code ==="-9"){
-      ElementUI.Message.warning(err.response.data.msg);
+    if(errInfo.code ==="-9"){
+      ElementUI.Message.warning(errInfo.msg);
     }
-    // let res = err.response
-    // if (err&&failure) {
-    //   failure(res);
-      //console.log('api error, HTTP CODE: ' + res.status)
-    // }
+    if (err && failure) {
+      failure();
+    }
   })
 }
 

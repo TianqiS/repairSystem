@@ -1,5 +1,5 @@
 const router = require('koa-router')({
-  prefix: '/users',
+  prefix: '/user',
 })
 
 router.get('/repairmanInfo', async function(ctx, next) {

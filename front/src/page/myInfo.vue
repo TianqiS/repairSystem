@@ -43,9 +43,11 @@ export default {
   },
   methods:{
       getRepairmanInfo() {
-        this.$api.get('/user/repairmanInfo', repairmanInfo => {
+        this.$api.get('/user/repairmanInfo', "", repairmanInfo => {
           this.repairmanInfo = repairmanInfo;
           console.log(repairmanInfo);
+        }, () => {
+          this.$router.push('login');
         })
       }
   }
