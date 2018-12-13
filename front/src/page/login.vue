@@ -39,7 +39,7 @@ export default {
   },
   methods:{
       loginIn:function(){
-        this.$api.post('/common/repairemanLogin', this.loginInfo, r => {
+        this.$api.post('/common/repairmanLogin', this.loginInfo, r => {
             if(r.status === 'success'){
               this.$router.push('myInfo');
             }

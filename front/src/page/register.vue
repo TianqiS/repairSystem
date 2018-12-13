@@ -51,7 +51,7 @@
           workAddress,
           staffId
         } = this.registerInfo;
-        this.$api.post('/common/repairemanRegister', {
+        this.$api.post('/common/repairmanRegister', {
           phone,
           password,
           name,

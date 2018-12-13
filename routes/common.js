@@ -4,7 +4,7 @@ const router = require('koa-router')({
 const repairemanModule = require('../module/repaireman');
 const encryption = require('../utils/md5');
 
-router.post('/repairemanLogin', async (ctx, next) => {
+router.post('/repairmanLogin', async (ctx, next) => {
   const { phone, password } = ctx.request.body;
   const repairemanInfo = (await repairemanModule.getRepairemanInfo({ phone }));
   const md5Password = encryption.b64_md5(password);
@@ -19,7 +19,7 @@ router.post('/repairemanLogin', async (ctx, next) => {
   throw 40001;
 })
 
-router.post('/repairemanRegister', async function(ctx, next) {
+router.post('/repairemaRegister', async function(ctx, next) {
   const {
     staffId,
     name,
