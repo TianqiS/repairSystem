@@ -7,7 +7,7 @@ const logger = require('koa-logger')
 const middleware = require('./utils/middleware');
 
 const common = require('./routes/common')
-const users = require('./routes/users')
+const users = require('./routes/user')
 
 // error handler
 app.use(middleware.errorHandle);
