@@ -15,4 +15,14 @@ router.get('/repairmanInfo', async function(ctx, next) {
   }
 })
 
+router.get('/devicesInfo', async function(ctx, next) {
+  const repairmanStaffId = ctx.session.repairmanInfo.staffId;
+  const devicesInfo = await deviceModule.getDevicesInfoByRepairmanId(repairmanStaffId);
+
+  return ctx.body = {
+    status: 'success',
+    devicesInfo,
+  }
+})
+
 module.exports = router
