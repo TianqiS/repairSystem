@@ -8,8 +8,10 @@ router.get('/repairmanInfo', async function(ctx, next) {
   const devicesCount = (await deviceModule.getDevicesInfoByRepairmanId(repairmanInfo.staffId)).length;
   return ctx.body = {
     status: 'success',
-    repairmanInfo,
-    devicesCount
+    repairmanInfo: {
+      ...repairmanInfo,
+      devicesCount,
+    },
   }
 })
 
