@@ -25,4 +25,14 @@ router.get('/devicesInfo', async function(ctx, next) {
   }
 })
 
+router.get('/specialDevice', async function(ctx, next) {
+  const deviceId = ctx.request.query.deviceId;
+  const deviceInfo = await deviceModule.getDeviceInfo(deviceId);
+
+  return ctx.body = {
+    status: 'success',
+    deviceInfo,
+  }
+})
+
 module.exports = router
