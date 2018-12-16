@@ -1,4 +1,4 @@
 const Model = require('../utils/Model');
-const deviceModel = new Model('device');
+let deviceModel = new Model('device');
 
-module.export = deviceModel;
+module.exports = deviceModel;
