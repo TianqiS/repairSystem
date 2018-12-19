@@ -4,26 +4,26 @@
             <div class="devDetail_topbox">
                 <i class="el-icon-circle-check-outline"></i><span class="lon_ml20">{{deviceInfo.status === 1? '设备良好' : '设备故障'}}</span>
             </div>
-            <div class="devDetail_topinfo">信息更新：2018-12-12 21:22:22</div>
+            <div class="devDetail_topinfo">信息更新：{{deviceInfo.update_time}}</div>
         </div>
         <el-tabs v-model="activeName" class="devDetail">
             <el-tab-pane label="基础信息" name="first">
                 <div class="content">
                     <el-form label-width="90px" :model="formLabelAlign">
                         <el-form-item label="设备编号：">
-                            <el-input v-model="formLabelAlign.code"></el-input>
+                            <el-input readonly="true" v-model="deviceInfo.id"></el-input>
                         </el-form-item>
                         <el-form-item label="设备类型：">
-                            <el-input v-model="formLabelAlign.type"></el-input>
+                            <el-input readonly="true" v-model="deviceInfo.device_type"></el-input>
                         </el-form-item>
                         <el-form-item label="制造商：">
-                            <el-input v-model="formLabelAlign.maker"></el-input>
+                            <el-input readonly="true" v-model="deviceInfo.producer"></el-input>
                         </el-form-item>
                         <el-form-item label="序列号：">
-                            <el-input v-model="formLabelAlign.number"></el-input>
+                            <el-input readonly="true" v-model="deviceInfo.serial_number"></el-input>
                         </el-form-item>
                         <el-form-item label="安装地址：">
-                            <el-input v-model="formLabelAlign.addr"></el-input>
+                            <el-input readonly="true" v-model="deviceInfo.location"></el-input>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -148,7 +148,7 @@
         const deviceId = this.$route.query.deviceId;
         this.$api.get('/user/specialDevice', { deviceId }, data => {
           this.deviceInfo = data.deviceInfo;
-          console.log(this.deviceInfo.status)
+          console.log(this.deviceInfo.update_time)
         })
       }
     }
