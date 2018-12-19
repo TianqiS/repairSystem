@@ -15,7 +15,7 @@
             <div class="myDev_list">
                 <ul>
                     <li v-for="device in devicesInfo">
-                        <router-link to="/devDetail">
+                        <router-link :to="{path: '/devDetail', query: {deviceId: device.id}}">
                             <h2><label>设备编号</label><span>{{device.id}}</span><em :class="computeClass(device.status)">{{device.status === 1? '良好' : '故障'}}</em></h2>
                             <p><label>使用单位</label><span>{{device.useUnit}}</span></p>
                             <p><label>使用地址</label><span>{{device.location}}</span></p>

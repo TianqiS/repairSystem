@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="devDetail_top">
+        <div :class="computeTop(deviceInfo.status)">
             <div class="devDetail_topbox">
-                <i class="el-icon-circle-check-outline"></i><span class="lon_ml20">设备良好</span>
+                <i class="el-icon-circle-check-outline"></i><span class="lon_ml20">{{deviceInfo.status === 1? '设备良好' : '设备故障'}}</span>
             </div>
             <div class="devDetail_topinfo">信息更新：2018-12-12 21:22:22</div>
         </div>
-        <el-tabs v-model="activeName" class="devDetail" >
+        <el-tabs v-model="activeName" class="devDetail">
             <el-tab-pane label="基础信息" name="first">
                 <div class="content">
                     <el-form label-width="90px" :model="formLabelAlign">
@@ -31,31 +31,32 @@
             <el-tab-pane label="实时数据" name="second">
                 <div class="content">
                     <el-table
-                        :data="tableData"
-                        style="width: 100%">
+                            :data="tableData"
+                            style="width: 100%">
                         <el-table-column
-                            prop="code"
-                            label="#"
-                            width="80">
+                                prop="code"
+                                label="#"
+                                width="80">
                         </el-table-column>
                         <el-table-column
-                            prop="name"
-                            label="数据名称">
+                                prop="name"
+                                label="数据名称">
                         </el-table-column>
                         <el-table-column
-                            prop="value"
-                            label="数据值">
+                                prop="value"
+                                label="数据值">
                         </el-table-column>
                     </el-table>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="报修记录" name="third">
                 <div class="content devDetailJL">
-                    <ul>    
+                    <ul>
                         <li>
                             <router-link to="/repairsDetail">
                                 <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span class="lon_mr10">PNM3423423223</span><span>报修</span></p>
+                                    <p><span class="lon_mr10">UPS</span><span
+                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
                                     <p>2018-12-32 21:11:32</p>
                                 </div>
                                 <div class="devDetailJL_right fl">
@@ -67,7 +68,8 @@
                         <li>
                             <router-link to="/repairsDetail">
                                 <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span class="lon_mr10">PNM3423423223</span><span>报修</span></p>
+                                    <p><span class="lon_mr10">UPS</span><span
+                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
                                     <p>2018-12-32 21:11:32</p>
                                 </div>
                                 <div class="devDetailJL_right fl">
@@ -79,7 +81,8 @@
                         <li>
                             <router-link to="/repairsDetail">
                                 <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span class="lon_mr10">PNM3423423223</span><span>报修</span></p>
+                                    <p><span class="lon_mr10">UPS</span><span
+                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
                                     <p>2018-12-32 21:11:32</p>
                                 </div>
                                 <div class="devDetailJL_right fl">
@@ -96,35 +99,58 @@
 </template>
 
 <script>
-export default {
-  created () {
-      
- },
- data(){
-  
-  	return {
-       activeName: 'first',
-       formLabelAlign:{
-           code:'k123123',
-           type:"UPS",
-           maker:"UPS制造",
-           number:"3345465456523",
-           addr:"科园南二路2号"
-       },
-       tableData: [{
-            code: '1',
-            name: '输入电压',
-            value: '227.70V'
-          },{
-            code: '2',
-            name: '输出电压',
-            value: '0V'
-          }]
+  export default {
+    created() {
+      this.getSpecialDeviceInfo();
+    },
+    computed: {
+      computeTop() {
+        return function (status) {
+          return status === 1 ? 'devDetail_top' : 'devDetail_top_error';
+        }
+      }
+    },
+    data() {
 
-  	}
-  },
-  methods:{
-      
+      return {
+        activeName: 'first',
+        deviceInfo: {
+          id: "",
+          device_type: "",
+          useUnit: "",
+          producer: "",
+          serial_number: "",
+          location: "",
+          status: "",
+          update_time: "",
+        },
+        formLabelAlign: {
+          code: 'k123123',
+          type: "UPS",
+          maker: "UPS制造",
+          number: "3345465456523",
+          addr: "科园南二路2号"
+        },
+        tableData: [{
+          code: '1',
+          name: '输入电压',
+          value: '227.70V'
+        }, {
+          code: '2',
+          name: '输出电压',
+          value: '0V'
+        }]
+
+      }
+    },
+    methods: {
+      getSpecialDeviceInfo() {
+        const deviceId = this.$route.query.deviceId;
+        this.$api.get('/user/specialDevice', { deviceId }, data => {
+          this.deviceInfo = data.deviceInfo;
+          console.log(this.deviceInfo.status)
+        })
+      }
+    }
   }
-}
 </script>

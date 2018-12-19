@@ -302,6 +302,13 @@ ul,li{
   color: #fff;
   text-align: center;
 }
+.devDetail_top_error{
+    width: 100%;
+    padding: 10px;
+    background: #ff1c23;
+    color: #fff;
+    text-align: center;
+}
 .devDetail_topbox i{
   font-size: 80px;
   display: inline-block;
