@@ -4,12 +4,16 @@ function Model(tableName) {
   this.tableName = tableName;
 }
 
+Model.prototype.getTable = function() {
+  return db.from(this.tableName);
+}
+
 Model.prototype.getItem = function(query) {
-  return db.from(this.tableName).where(query);
+  return this.getTable().where(query);
 }
 
 Model.prototype.insertItem = function(query) {
-  return db.from(this.tableName).insert(query);
+  return this.getTable().insert(query);
 }
 
 Model.prototype.deleteItem = function(query) {
