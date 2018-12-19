@@ -9,7 +9,7 @@
         <el-tabs v-model="activeName" class="devDetail">
             <el-tab-pane label="基础信息" name="first">
                 <div class="content">
-                    <el-form label-width="90px" :model="formLabelAlign">
+                    <el-form label-width="90px" :model="deviceInfo">
                         <el-form-item label="设备编号：">
                             <el-input readonly="true" v-model="deviceInfo.id"></el-input>
                         </el-form-item>
@@ -53,7 +53,7 @@
                 <div class="content devDetailJL">
                     <ul>
                         <li v-for="deviceLog in repairLogs">
-                            <router-link to="/repairsDetail">
+                            <router-link :to="{path: '/repairsDetail', query: {logId: deviceLog.id}}">
                                 <div class="devDetailJL_left fl">
                                     <p><span class="lon_mr10">{{deviceLog.device_type}}</span><span
                                             class="lon_mr10">{{deviceLog.deviceId}}</span><span>报修</span></p>
@@ -99,13 +99,6 @@
           update_time: "",
         },
         repairLogs: [],
-        formLabelAlign: {
-          code: 'k123123',
-          type: "UPS",
-          maker: "UPS制造",
-          number: "3345465456523",
-          addr: "科园南二路2号"
-        },
         tableData: [{
           code: '1',
           name: '输入电压',
