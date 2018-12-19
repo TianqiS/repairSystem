@@ -1,6 +1,5 @@
 const deviceModule = require('../module/device');
 const repairlogModule = require('../module/repairlog');
-const moment  = require('moment');
 const router = require('koa-router')({
   prefix: '/user',
 })
@@ -30,7 +29,6 @@ router.get('/devicesInfo', async function(ctx, next) {
 router.get('/specialDevice', async function(ctx, next) {
   const deviceId = ctx.request.query.deviceId;
   const deviceInfo = await deviceModule.getDeviceInfo(deviceId);
-  deviceInfo.update_time = moment(deviceInfo.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
 
   return ctx.body = {
     status: 'success',
@@ -42,10 +40,10 @@ router.get('/deviceRepairLog', async function(ctx, next) {
   const repairmanId = ctx.session.repairmanInfo.staffId;
   const deviceId = ctx.request.query.deviceId;
 
-  let repairLog = await repairlogModule.getDeviceRepairlog(repairmanId, deviceId);
+  let repairLogs = await repairlogModule.getDeviceRepairlog(repairmanId, deviceId);
   return ctx.body = {
     status: 'success',
-    repairLog,
+    repairLogs,
   }
 })
 

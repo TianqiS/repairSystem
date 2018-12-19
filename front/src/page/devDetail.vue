@@ -52,41 +52,15 @@
             <el-tab-pane label="报修记录" name="third">
                 <div class="content devDetailJL">
                     <ul>
-                        <li>
+                        <li v-for="deviceLog in repairLogs">
                             <router-link to="/repairsDetail">
                                 <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span
-                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
-                                    <p>2018-12-32 21:11:32</p>
+                                    <p><span class="lon_mr10">{{deviceLog.device_type}}</span><span
+                                            class="lon_mr10">{{deviceLog.deviceId}}</span><span>报修</span></p>
+                                    <p>{{deviceLog.repairTime}}</p>
                                 </div>
                                 <div class="devDetailJL_right fl">
-                                    <span>待审核</span>
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/repairsDetail">
-                                <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span
-                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
-                                    <p>2018-12-32 21:11:32</p>
-                                </div>
-                                <div class="devDetailJL_right fl">
-                                    <span>处理中</span>
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/repairsDetail">
-                                <div class="devDetailJL_left fl">
-                                    <p><span class="lon_mr10">UPS</span><span
-                                            class="lon_mr10">PNM3423423223</span><span>报修</span></p>
-                                    <p>2018-12-32 21:11:32</p>
-                                </div>
-                                <div class="devDetailJL_right fl">
-                                    <span>完成</span>
+                                    <span>{{deviceLog.log_status === 1? '已完成' : '处理中'}}</span>
                                     <i class="fa fa-angle-right"></i>
                                 </div>
                             </router-link>
@@ -124,6 +98,7 @@
           status: "",
           update_time: "",
         },
+        repairLogs: [],
         formLabelAlign: {
           code: 'k123123',
           type: "UPS",
@@ -148,7 +123,9 @@
         const deviceId = this.$route.query.deviceId;
         this.$api.get('/user/specialDevice', { deviceId }, data => {
           this.deviceInfo = data.deviceInfo;
-          console.log(this.deviceInfo.update_time)
+        })
+        this.$api.get('/user/deviceRepairLog', { deviceId }, data => {
+          this.repairLogs = data.repairLogs;
         })
       }
     }
