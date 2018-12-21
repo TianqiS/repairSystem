@@ -53,7 +53,7 @@
                 <div class="content devDetailJL">
                     <ul>
                         <li v-for="deviceLog in repairLogs">
-                            <router-link :to="{path: '/repairsDetail', query: {logId: deviceLog.id}}">
+                            <router-link :to="{path: '/repairsDetail', query: {logId: deviceLog.log_id}}">
                                 <div class="devDetailJL_left fl">
                                     <p><span class="lon_mr10">{{deviceLog.device_type}}</span><span
                                             class="lon_mr10">{{deviceLog.deviceId}}</span><span>报修</span></p>

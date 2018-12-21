@@ -6,7 +6,7 @@ const router = require('koa-router')({
 
 router.get('/repairmanInfo', async function(ctx, next) {
   const repairmanInfo = ctx.session.repairmanInfo;
-  const devicesCount = (await deviceModule.getDevicesInfoByRepairmanId(repairmanInfo.staffId)).length;
+  const devicesCount = (await deviceModule.getDevicesInfoByRepairmanId(repairmanInfo.staff_id)).length;
   return ctx.body = {
     status: 'success',
     repairmanInfo: {
@@ -17,7 +17,7 @@ router.get('/repairmanInfo', async function(ctx, next) {
 })
 
 router.get('/devicesInfo', async function(ctx, next) {
-  const repairmanStaffId = ctx.session.repairmanInfo.staffId;
+  const repairmanStaffId = ctx.session.repairmanInfo.staff_id;
   const devicesInfo = await deviceModule.getDevicesInfoByRepairmanId(repairmanStaffId);
 
   return ctx.body = {
@@ -37,7 +37,7 @@ router.get('/specialDevice', async function(ctx, next) {
 })
 
 router.get('/deviceRepairLog', async function(ctx, next) {
-  const repairmanId = ctx.session.repairmanInfo.staffId;
+  const repairmanId = ctx.session.repairmanInfo.staff_id;
   const deviceId = ctx.request.query.deviceId;
 
   let repairLogs = await repairlogModule.getDeviceRepairlog(repairmanId, deviceId);
@@ -50,7 +50,7 @@ router.get('/deviceRepairLog', async function(ctx, next) {
 router.get('/specialRepairLog', async function(ctx, next) {
   const logId = ctx.request.query.logId;
   const logDetail = await repairlogModule.getSpecialLog(logId);
-  logDetail.repairmanName = ctx.session.repairmanInfo.name;
+  logDetail.repairman_name = ctx.session.repairmanInfo.name;
   return ctx.body = {
     status: 'success',
     logDetail

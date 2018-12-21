@@ -11,7 +11,7 @@ exports.getDeviceInfo = async function(deviceId) {
 }
 
 exports.getDevicesInfoByRepairmanId = async function(repairmanId) {
-  return deviceModel.getItem({ repairmanId }).catch(err => {
+  return deviceModel.getItem({ repairman_id: repairmanId }).catch(err => {
     throw err;
   })
 }
