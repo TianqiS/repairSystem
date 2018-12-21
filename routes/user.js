@@ -50,6 +50,7 @@ router.get('/deviceRepairLog', async function(ctx, next) {
 router.get('/specialRepairLog', async function(ctx, next) {
   const logId = ctx.request.query.logId;
   const logDetail = await repairlogModule.getSpecialLog(logId);
+  logDetail.repairmanName = ctx.session.repairmanInfo.name;
   return ctx.body = {
     status: 'success',
     logDetail
