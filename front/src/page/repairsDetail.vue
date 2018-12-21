@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="lon_top">
-            <router-link to="/devDetail" class="left"><img src="static/images/left.png"></router-link>
+            <router-link :to="{path: '/devDetail', query: {deviceId: logDetail.device_id}}" class="left"><img src="static/images/left.png"></router-link>
             <span>报修详情</span>
             <router-link to="" class="cha"><img src="static/images/cha.png"></router-link>
         </div>
@@ -45,6 +45,7 @@
           repairman_name: "",
           finish_time: "",
           detail: "",
+          device_id: "",
         }
       }
     },
