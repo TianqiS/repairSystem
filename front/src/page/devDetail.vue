@@ -1,6 +1,7 @@
 <template>
     <div>
         <div :class="computeTop(deviceInfo.status)">
+            <router-link :to="{path: '/myDev'}" class="left"><i class="el-icon-arrow-left"></i></router-link>
             <div class="devDetail_topbox">
                 <i class="el-icon-circle-check-outline"></i><span class="lon_ml20">{{deviceInfo.status === 1? '设备良好' : '设备故障'}}</span>
             </div>

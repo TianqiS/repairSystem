@@ -302,12 +302,31 @@ ul,li{
   color: #fff;
   text-align: center;
 }
+.devDetail_top a{
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+}
+
+.devDetail_top .left {
+    color: white;
+    left: 20px;
+}
 .devDetail_top_error{
     width: 100%;
     padding: 10px;
     background: #ff1c23;
     color: #fff;
     text-align: center;
+}
+.devDetail_top_error a{
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+}
+.devDetail_top_error .left {
+    color: white;
+    left: 20px;
 }
 .devDetail_topbox i{
   font-size: 80px;
