@@ -12,5 +12,13 @@ exports.getDeviceRepairlog = async function(repairmanId, deviceId) {
       repairLog.update_time = moment(repairLog.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
     })
     return repairLogs;
+  }).catch(err => {
+    throw err;
   });
+}
+
+exports.getSpecialLog = async function(logId) {
+  return repairlogModel.getItem({id: logId}).first().catch(err => {
+    throw err;
+  })
 }

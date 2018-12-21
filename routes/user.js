@@ -47,4 +47,13 @@ router.get('/deviceRepairLog', async function(ctx, next) {
   }
 })
 
+router.get('/specialRepairLog', async function(ctx, next) {
+  const logId = ctx.request.query.logId;
+  const logDetail = await repairlogModule.getSpecialLog(logId);
+  return ctx.body = {
+    status: 'success',
+    logDetail
+  }
+})
+
 module.exports = router
