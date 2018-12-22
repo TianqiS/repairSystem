@@ -58,6 +58,7 @@ router.post('/adminLogin', async function(ctx, next) {
     return ctx.body = {
       status: 'success',
       adminInfo,
+      token: 'admin',
     }
   }
   throw 40001;
