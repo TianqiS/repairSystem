@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware');
 
 const common = require('./routes/common')
 const users = require('./routes/user')
+const admin = require('./routes/admin');
 
 // error handler
 app.use(middleware.errorHandle);
@@ -38,6 +39,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(common.routes(), common.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(admin.routes(), admin.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -26,3 +26,9 @@ exports.getSpecialLog = async function(logId) {
     throw err;
   })
 }
+
+exports.getRepairlogList = async function(page, perPage) {
+  return repairlogModel.getItem({}).offset((page * 1 - 1) * perPage).limit(perPage * 1).catch(err => {
+    throw err;
+  })
+}
