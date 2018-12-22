@@ -2,6 +2,7 @@ const router = require('koa-router')({
   prefix: '/common',
 })
 const repairmanModule = require('../module/repairman');
+const adminModule = require('../module/admin');
 const encryption = require('../utils/md5');
 
 router.post('/repairmanLogin', async (ctx, next) => {
@@ -44,6 +45,22 @@ router.post('/repairmanRegister', async function(ctx, next) {
   ctx.body = {
     status: 'success'
   }
+})
+
+router.post('/adminLogin', async function(ctx, next) {
+  const {
+    userName,
+    password,
+  } = ctx.request.body;
+
+  const adminInfo = await adminModule.getAdminInfo(userName);
+  if(password === adminInfo.password) {
+    return ctx.body = {
+      status: 'success',
+      adminInfo,
+    }
+  }
+  throw 40001;
 })
 
 module.exports = router
