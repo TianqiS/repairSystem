@@ -1,8 +1,10 @@
 const moment = require('moment');
 const repairlogModel = require('../model/repairlog');
+const userModel = require('../model/user');
+const repairmanModel = require('../model/repairman');
 
 exports.getDeviceRepairlog = async function(repairmanId, deviceId) {
-  return repairlogModel.getRepairLogAndDetails({
+  return repairlogModel.getRepairlogAndDetails({
     'repairlog.repairman_id': repairmanId,
     device_id: deviceId,
   }).then(repairLogs => {
@@ -28,7 +30,23 @@ exports.getSpecialLog = async function(logId) {
 }
 
 exports.getRepairlogList = async function(page, perPage) {
-  return repairlogModel.getItem({}).offset((page * 1 - 1) * perPage).limit(perPage * 1).catch(err => {
+  let repailogsList = await repairlogModel.getItem({}).offset((page * 1 - 1) * perPage).limit(perPage * 1).catch(err => {
+    throw err;
+  });
+  let list = [];
+  let count = 0;
+  await new Promise(function(resolve) {
+    return repailogsList.forEach(async (repairlog, i) => {
+      let result = {...repairlog};
+      let userInfo = await userModel.getItem({user_id: repairlog.user_id}).first();
+      let repairmanInfo = await repairmanModel.getItem({staff_id: repairlog.repairman_id}).first();
+      result.userInfo = userInfo;
+      result.repairmanInfo = repairmanInfo;
+      list.push(result);
+      if(i === repailogsList.length - 1) return resolve();
+    })
+  }).catch(err => {
     throw err;
   })
+  return list;
 }
