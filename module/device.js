@@ -32,3 +32,11 @@ exports.getDeviceInfoList = async function() {
     throw err;
   });
 }
+
+exports.updateDeviceInfo = async function(deviceInfo) {
+  const id = deviceInfo.id;
+  delete deviceInfo.id;
+  return deviceModel.updateItem({ id }, deviceInfo).catch(err => {
+    throw err;
+  })
+}

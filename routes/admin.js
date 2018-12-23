@@ -66,4 +66,36 @@ router.get('/deviceList', async function(ctx, next) {
   }
 })
 
+router.post('/editDevice', async function(ctx, next) {
+  const {
+    deviceId,
+    deviceType,
+    useUnit,
+    producer,
+    serialNumber,
+    location,
+    repairmanName,
+    status
+  } = ctx.request.body;
+
+  const repairmanId = (await repairmanModule.getRepairmanInfo({
+    name: repairmanName
+  })).staff_id;
+  await deviceModule.updateDeviceInfo({
+    id: deviceId,
+    device_type: deviceType,
+    use_unit: useUnit,
+    producer: producer,
+    serial_number: serialNumber,
+    location,
+    repairman_id: repairmanId,
+    status
+  })
+
+  return ctx.body = {
+    status: 'success'
+  }
+
+})
+
 module.exports = router
