@@ -38,8 +38,8 @@ exports.getRepairlogList = async function(page, perPage) {
   let count = 0;
   await new Promise(function(resolve) {
     return repailogsList.forEach(async (repairlog, i) => {
-      repairlog.repair_time = moment(repairlog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
-      repairlog.finish_time = moment(repairlog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      if(repairlog.repair_time)repairlog.repair_time = moment(repairlog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      if(repairlog.finish_time)repairlog.finish_time = moment(repairlog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
       let result = {...repairlog};
       let userInfo = await userModel.getItem({user_id: repairlog.user_id}).first();
       let repairmanInfo = await repairmanModel.getItem({staff_id: repairlog.repairman_id}).first();
@@ -52,4 +52,10 @@ exports.getRepairlogList = async function(page, perPage) {
     throw err;
   })
   return list;
+}
+
+exports.createLog = async function(logInfo) {
+  return repairlogModel.insertItem(logInfo).catch(err => {
+    throw err;
+  })
 }

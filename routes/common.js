@@ -3,6 +3,8 @@ const router = require('koa-router')({
 })
 const repairmanModule = require('../module/repairman');
 const adminModule = require('../module/admin');
+const repairlogModule = require('../module/repairlog');
+const deviceModule = require('../module/device');
 const encryption = require('../utils/md5');
 
 router.post('/repairmanLogin', async (ctx, next) => {
@@ -62,6 +64,26 @@ router.post('/adminLogin', async function(ctx, next) {
     }
   }
   throw 40001;
+})
+
+router.post('/repairInfo', async function(ctx, next) {
+  const type = ctx.request.body.repairType;
+  let repairInfo = ctx.request.body;
+  let deviceInfo = {};
+  if(type === 'deviceId') deviceInfo = await deviceModule.getDeviceInfo(repairInfo.deviceId);
+
+  await repairlogModule.createLog({
+    repair_time: new Date(),
+    device_id: repairInfo.deviceId,
+    detail: repairInfo.detail,
+    user_id: 1,
+    log_status: -1
+  })
+
+  return ctx.body = {
+    status: 'success'
+  }
+
 })
 
 module.exports = router

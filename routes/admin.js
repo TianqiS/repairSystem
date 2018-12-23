@@ -37,8 +37,8 @@ router.post('/device', async function(ctx, next) {
     location,
     repairmanName
   } = ctx.request.body;
-
-  const repairmanId = (await repairmanModule.getRepairmanInfo({
+  let repairmanId = '';
+  if(repairmanName) repairmanId = (await repairmanModule.getRepairmanInfo({
     name: repairmanName
   })).staff_id;
   await deviceModule.createNewDevice({

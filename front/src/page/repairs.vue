@@ -8,12 +8,12 @@
         <el-tabs v-model="activeName" class="devDetail repairs" >
             <el-tab-pane label="设备编号报修" name="first">
                 <div class="content">
-                    <el-form label-width="96px" :model="formLabelAlign">
+                    <el-form label-width="96px" :model="repairInfo">
                         <el-form-item label="设备编号：">
-                            <el-input v-model="formLabelAlign.code"></el-input>
+                            <el-input v-model="repairInfo.deviceId"></el-input>
                         </el-form-item>
                         <el-form-item label="故障描述：">
-                            <el-input type="textarea" v-model="formLabelAlign.type"></el-input>
+                            <el-input type="textarea" v-model="repairInfo.detail"></el-input>
                         </el-form-item>
                         <el-form-item label="故障图片：" class="noBorder">
                             <el-upload
@@ -24,7 +24,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="loginInfo_bottom">
-                        <router-link to="" class="btn">报    修</router-link>
+                      <button class="btn button" @click="postRepairInfo"><span>报    修</span></button>
                     </div>
                 </div>
             </el-tab-pane>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import ElementUI from 'element-ui'
 export default {
   created () {
       
@@ -87,12 +88,26 @@ export default {
             code: '2',
             name: '输出电压',
             value: '0V'
-          }]
-
+          }],
+      type: 'deviceId',
+      repairInfo: {}
   	}
   },
   methods:{
-      
+      postRepairInfo() {
+        const {
+          deviceId,
+          detail
+        } = this.repairInfo
+        this.$api.post('/common/repairInfo', {
+          deviceId,
+          detail,
+          type: this.type
+        }, () => {
+          ElementUI.Message.success('保修成功')
+          return this.$router.push('login')
+        })
+      }
   }
 }
 </script>
