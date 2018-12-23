@@ -21,3 +21,14 @@ exports.createNewDevice = async function(deviceInfo) {
     throw err;
   })
 }
+
+exports.getDeviceInfoList = async function() {
+  return deviceModel.getDeviceInfoAndStaffInfo({}).then(deviceInfoList => {
+    deviceInfoList.forEach(deviceInfo => {
+      deviceInfo.update_time = moment(deviceInfo.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+    });
+    return deviceInfoList;
+  }).catch(err => {
+    throw err;
+  });
+}

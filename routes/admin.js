@@ -57,4 +57,13 @@ router.post('/device', async function(ctx, next) {
   }
 })
 
+router.get('/deviceList', async function(ctx, next) {
+  const list = await deviceModule.getDeviceInfoList();
+
+  return ctx.body = {
+    status: 'success',
+    list
+  }
+})
+
 module.exports = router
