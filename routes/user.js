@@ -57,4 +57,14 @@ router.get('/specialRepairLog', async function(ctx, next) {
   }
 })
 
+router.get('/repairmanRepairLog', async function(ctx, next) {
+  const repairmanId = ctx.session.repairmanInfo.staff_id;
+
+  const repairlogList = await repairlogModule.getDeviceRepairlog(repairmanId)
+  return ctx.body = {
+    status: 'success',
+    repairlogList
+  }
+})
+
 module.exports = router
