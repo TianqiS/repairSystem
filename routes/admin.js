@@ -1,5 +1,6 @@
 const repairlogModule = require('../module/repairlog');
 const repairmanModule = require('../module/repairman');
+const deviceModule = require('../module/device');
 const router = require('koa-router')({
   prefix: '/admin',
 })
@@ -23,6 +24,36 @@ router.get('/repairmanList', async function(ctx, next) {
   return ctx.body = {
     status: 'success',
     repairmanList,
+  }
+})
+
+router.post('/device', async function(ctx, next) {
+  const {
+    deviceId,
+    deviceType,
+    useUnit,
+    producer,
+    serialNumber,
+    location,
+    repairmanName
+  } = ctx.request.body;
+
+  const repairmanId = (await repairmanModule.getRepairmanInfo({
+    name: repairmanName
+  })).staff_id;
+  await deviceModule.createNewDevice({
+    id: deviceId,
+    device_type: deviceType,
+    use_unit: useUnit,
+    producer: producer,
+    serial_number: serialNumber,
+    location,
+    repairman_id: repairmanId,
+    status: 1,
+    update_time: new Date()
+  })
+  return ctx.body = {
+    status: 'success'
   }
 })
 

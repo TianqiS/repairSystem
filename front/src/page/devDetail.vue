@@ -58,7 +58,7 @@
                                 <div class="devDetailJL_left fl">
                                     <p><span class="lon_mr10">{{deviceLog.device_type}}</span><span
                                             class="lon_mr10">{{deviceLog.deviceId}}</span><span>报修</span></p>
-                                    <p>{{deviceLog.repairTime}}</p>
+                                    <p>{{deviceLog.repair_time}}</p>
                                 </div>
                                 <div class="devDetailJL_right fl">
                                     <span>{{deviceLog.log_status === 1? '已完成' : '处理中'}}</span>

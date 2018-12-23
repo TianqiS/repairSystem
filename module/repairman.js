@@ -1,7 +1,7 @@
 const repairmanModel = require('../model/repairman');
 
-exports.getRepairmanInfo = async function(phone) {
-  return await repairmanModel.getItem(phone).first().catch(err => {
+exports.getRepairmanInfo = async function(info) {
+  return await repairmanModel.getItem(info).first().catch(err => {
     if(err) throw err;
   });
 }

@@ -15,3 +15,9 @@ exports.getDevicesInfoByRepairmanId = async function(repairmanId) {
     throw err;
   })
 }
+
+exports.createNewDevice = async function(deviceInfo) {
+  return deviceModel.insertItem(deviceInfo).catch(err => {
+    throw err;
+  })
+}

@@ -10,8 +10,8 @@ exports.getDeviceRepairlog = async function(repairmanId, deviceId) {
   if(deviceId) query.device_id = deviceId;
   return repairlogModel.getRepairlogAndDetails(query).then(repairLogs => {
     repairLogs.forEach(repairLog => {
-      repairLog.repairTime = moment(repairLog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
-      repairLog.finishTime = moment(repairLog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      repairLog.repair_time = moment(repairLog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      repairLog.finish_time = moment(repairLog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
       repairLog.update_time = moment(repairLog.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
     })
     return repairLogs;

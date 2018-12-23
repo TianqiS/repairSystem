@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="lon_top">
-            <router-link :to="{path: '/devDetail', query: {deviceId: logDetail.device_id}}" class="left"><img src="static/images/left.png"></router-link>
+            <a @click="$router.go(-1)"  class="left"><img src="static/images/left.png"></a>
             <span>报修详情</span>
             <router-link to="" class="cha"><img src="static/images/cha.png"></router-link>
         </div>
