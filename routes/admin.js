@@ -1,4 +1,5 @@
 const repairlogModule = require('../module/repairlog');
+const repairmanModule = require('../module/repairman');
 const router = require('koa-router')({
   prefix: '/admin',
 })
@@ -13,6 +14,15 @@ router.get('/repairList', async function(ctx, next) {
   return ctx.body = {
     status: 'success',
     list,
+  }
+})
+
+router.get('/repairmanList', async function(ctx, next) {
+  const repairmanList = await repairmanModule.getRepairmanList();
+
+  return ctx.body = {
+    status: 'success',
+    repairmanList,
   }
 })
 

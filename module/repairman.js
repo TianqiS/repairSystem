@@ -11,3 +11,9 @@ exports.addNewRepairman = async function(information) {
     if(err) throw err;
   })
 }
+
+exports.getRepairmanList = async function() {
+  return repairmanModel.getItem({}).catch(err => {
+    throw err;
+  })
+}
