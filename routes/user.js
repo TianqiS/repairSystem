@@ -67,4 +67,15 @@ router.get('/repairmanRepairLog', async function(ctx, next) {
   }
 })
 
+router.post('/changeDeviceStatus', async function(ctx, next) {
+  const { deviceId, logId } = ctx.request.body;
+
+  await deviceModule.changeDeviceStatus(deviceId);
+  await repairlogModule.changeRepairlogStatus(logId)
+
+  return ctx.body = {
+    status: 'success'
+  }
+})
+
 module.exports = router

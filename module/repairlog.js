@@ -59,3 +59,9 @@ exports.createLog = async function(logInfo) {
     throw err;
   })
 }
+
+exports.changeRepairlogStatus = async function(logId) {
+  return repairlogModel.updateItem({log_id: logId, log_status: -1}, {log_status: 1, feedback: '问题已经解决'}).catch(err => {
+    throw err;
+  })
+}

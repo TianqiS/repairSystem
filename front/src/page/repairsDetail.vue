@@ -26,11 +26,15 @@
                     <i class="el-icon-picture" style="font-size:90px;"></i>
                 </el-form-item>
             </el-form>
+          <div class="loginInfo_bottom">
+            <button class="btn button" @click="changeStatus"><span>完    成</span></button>
+          </div>
         </div>
     </div>
 </template>
 
 <script>
+  import ElementUI from 'element-ui'
   export default {
     created() {
       this.getLogDetail();
@@ -55,8 +59,18 @@
         this.logId = logId;
         this.$api.get('/user/specialRepairLog', {logId}, data => {
           const logDetail = data.logDetail;
+          console.log(logDetail)
           logDetail.log_status = logDetail.log_status === 1? '已完成' : '处理中';
           this.logDetail = logDetail;
+        })
+      },
+      changeStatus: function() {
+        this.$api.post('/user/changeDeviceStatus', {
+          deviceId: this.logDetail.device_id,
+          logId: this.logDetail.log_id
+        }, () => {
+          ElementUI.Message.success('操作成功');
+          return this.$router.push('/myDev')
         })
       }
     }

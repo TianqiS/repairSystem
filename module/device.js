@@ -40,3 +40,9 @@ exports.updateDeviceInfo = async function(deviceInfo) {
     throw err;
   })
 }
+
+exports.changeDeviceStatus = async function(deviceId) {
+  return deviceModel.updateItem({id: deviceId}, {status: 1}).catch(err => {
+    throw err;
+  })
+};
