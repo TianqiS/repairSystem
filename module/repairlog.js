@@ -10,9 +10,9 @@ exports.getDeviceRepairlog = async function(repairmanId, deviceId) {
   if(deviceId) query.device_id = deviceId;
   return repairlogModel.getRepairlogAndDetails(query).then(repairLogs => {
     repairLogs.forEach(repairLog => {
-      repairLog.repair_time = moment(repairLog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
-      repairLog.finish_time = moment(repairLog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
-      repairLog.update_time = moment(repairLog.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      if(repairLog.repair_time)repairLog.repair_time = moment(repairLog.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      if(repairLog.finish_time)repairLog.finish_time = moment(repairLog.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+      if(repairLog.update_time)repairLog.update_time = moment(repairLog.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
     })
     return repairLogs;
   }).catch(err => {
@@ -22,8 +22,8 @@ exports.getDeviceRepairlog = async function(repairmanId, deviceId) {
 
 exports.getSpecialLog = async function(logId) {
   return repairlogModel.getItem({log_id: logId}).first().then(log => {
-    log.repair_time = moment(log.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
-    log.finish_time = moment(log.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+    if(log.repair_time) log.repair_time = moment(log.repair_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+    if(log.finish_time) log.finish_time = moment(log.finish_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
     return log;
   }).catch(err => {
     throw err;
@@ -34,6 +34,7 @@ exports.getRepairlogList = async function(page, perPage) {
   let repailogsList = await repairlogModel.getItem({}).offset((page * 1 - 1) * perPage).limit(perPage * 1).catch(err => {
     throw err;
   });
+  if(!repailogsList.length) return [];
   let list = [];
   let count = 0;
   await new Promise(function(resolve) {
@@ -60,8 +61,11 @@ exports.createLog = async function(logInfo) {
   })
 }
 
-exports.changeRepairlogStatus = async function(logId) {
-  return repairlogModel.updateItem({log_id: logId, log_status: -1}, {log_status: 1, feedback: '问题已经解决'}).catch(err => {
+exports.updateRepairlog = async function(logId, updateInfo) {
+  return repairlogModel.updateItem({
+    log_id: logId,
+    log_status: -1
+  }, updateInfo).catch(err => {
     throw err;
   })
 }

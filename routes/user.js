@@ -70,8 +70,14 @@ router.get('/repairmanRepairLog', async function(ctx, next) {
 router.post('/changeDeviceStatus', async function(ctx, next) {
   const { deviceId, logId } = ctx.request.body;
 
-  await deviceModule.changeDeviceStatus(deviceId);
-  await repairlogModule.changeRepairlogStatus(logId)
+  await deviceModule.updateDeviceInfo(deviceId,{
+    status: 1
+  });
+  await repairlogModule.updateRepairlog(logId, {
+    log_status: 1,
+    feedback: '问题已经解决',
+    finish_time: new Date()
+  });
 
   return ctx.body = {
     status: 'success'

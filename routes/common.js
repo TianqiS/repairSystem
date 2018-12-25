@@ -36,7 +36,7 @@ router.post('/repairmanRegister', async function(ctx, next) {
   } = ctx.request.body;
 
   await repairmanModule.addNewRepairman({
-    staffId: staffId,
+    staff_id: staffId,
     name: name,
     phone: phone,
     password: encryption.b64_md5(password),
@@ -67,18 +67,21 @@ router.post('/adminLogin', async function(ctx, next) {
 })
 
 router.post('/repairInfo', async function(ctx, next) {
-  const type = ctx.request.body.repairType;
+  const type = ctx.request.body.type;
   let repairInfo = ctx.request.body;
   let deviceInfo = {};
+  console.log(repairInfo)
   if(type === 'deviceId') deviceInfo = await deviceModule.getDeviceInfo(repairInfo.deviceId);
-
-  await repairlogModule.createLog({
+  await deviceModule.changeDeviceStatus(repairInfo.deviceId, -1)
+  let logInfo = {
     repair_time: new Date(),
     device_id: repairInfo.deviceId,
     detail: repairInfo.detail,
     user_id: 1,
     log_status: -1
-  })
+  }
+  if(deviceInfo.repairman_id) logInfo.repairman_id = deviceInfo.repairman_id
+  await repairlogModule.createLog(logInfo)
 
   return ctx.body = {
     status: 'success'

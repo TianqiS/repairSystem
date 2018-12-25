@@ -104,8 +104,8 @@ export default {
           detail,
           type: this.type
         }, () => {
-          ElementUI.Message.success('保修成功')
-          return this.$router.push('login')
+          ElementUI.Message.success('报修成功')
+          return;
         })
       }
   }

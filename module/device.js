@@ -3,7 +3,7 @@ const deviceModel = require('../model/device');
 
 exports.getDeviceInfo = async function(deviceId) {
   return deviceModel.getItem({ id: deviceId }).first().then(deviceInfo => {
-    deviceInfo.update_time = moment(deviceInfo.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
+    if(deviceInfo.update_time) deviceInfo.update_time = moment(deviceInfo.update_time.getTime()).format('YYYY-MM-DD HH:mm:ss');
     return deviceInfo;
   }).catch(err => {
     throw err;
@@ -33,16 +33,14 @@ exports.getDeviceInfoList = async function() {
   });
 }
 
-exports.updateDeviceInfo = async function(deviceInfo) {
-  const id = deviceInfo.id;
-  delete deviceInfo.id;
-  return deviceModel.updateItem({ id }, deviceInfo).catch(err => {
+exports.updateDeviceInfo = async function(deviceId, deviceInfo) {
+  return deviceModel.updateItem({ id: deviceId }, deviceInfo).catch(err => {
     throw err;
   })
 }
 
-exports.changeDeviceStatus = async function(deviceId) {
-  return deviceModel.updateItem({id: deviceId}, {status: 1}).catch(err => {
+exports.changeDeviceStatus = async function(deviceId, status) {
+  return deviceModel.updateItem({id: deviceId}, { status }).catch(err => {
     throw err;
   })
 };
