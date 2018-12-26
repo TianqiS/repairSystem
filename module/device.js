@@ -39,8 +39,8 @@ exports.updateDeviceInfo = async function(deviceId, deviceInfo) {
   })
 }
 
-exports.changeDeviceStatus = async function(deviceId, status) {
-  return deviceModel.updateItem({id: deviceId}, { status }).catch(err => {
+exports.deleteDevice = async function(deviceId) {
+  return deviceModel.deleteItem({id: deviceId}).catch(err => {
     throw err;
   })
-};
+}

@@ -78,19 +78,23 @@ router.post('/editDevice', async function(ctx, next) {
     status
   } = ctx.request.body;
   console.log(status);
-
-  const repairmanId = (await repairmanModule.getRepairmanInfo({
-    name: repairmanName
-  })).staff_id;
-  await deviceModule.updateDeviceInfo(deviceId, {
+  let repairmanId;
+  let deviceInfo = {
     device_type: deviceType,
     use_unit: useUnit,
     producer: producer,
     serial_number: serialNumber,
     location,
-    repairman_id: repairmanId,
     status
-  })
+  };
+  if(repairmanName) {
+    repairmanId = (await repairmanModule.getRepairmanInfo({
+      name: repairmanName
+    })).staff_id;
+    deviceInfo.repairman_id = repairmanId;
+  }
+  if(repairmanName === "") deviceInfo.repairman_id = "";
+  await deviceModule.updateDeviceInfo(deviceId, deviceInfo);
 
   return ctx.body = {
     status: 'success'
@@ -125,6 +129,15 @@ router.post('/setRepairman', async function(ctx, next) {
 router.post('/deleteRepairlog', async function(ctx, next) {
   const { logId } = ctx.request.body;
   await repairlogModule.deleteRepairlog(logId)
+
+  return ctx.body = {
+    status: 'success'
+  }
+})
+
+router.post('/deleteDevice', async function(ctx, next) {
+  const { deviceId } = ctx.request.body;
+  await deviceModule.deleteDevice(deviceId);
 
   return ctx.body = {
     status: 'success'

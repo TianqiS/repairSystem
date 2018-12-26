@@ -72,7 +72,7 @@ router.post('/repairInfo', async function(ctx, next) {
   let deviceInfo = {};
   console.log(repairInfo)
   if(type === 'deviceId') deviceInfo = await deviceModule.getDeviceInfo(repairInfo.deviceId);
-  await deviceModule.changeDeviceStatus(repairInfo.deviceId, -1)
+  await deviceModule.updateDeviceInfo(repairInfo.deviceId, {status: -1})
   let logInfo = {
     repair_time: new Date(),
     device_id: repairInfo.deviceId,
