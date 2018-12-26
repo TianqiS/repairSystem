@@ -69,3 +69,9 @@ exports.updateRepairlog = async function(logId, updateInfo) {
     throw err;
   })
 }
+
+exports.deleteRepairlog = async function(logId) {
+  return repairlogModel.deleteItem({log_id: logId}).catch(err => {
+    throw err;
+  })
+}

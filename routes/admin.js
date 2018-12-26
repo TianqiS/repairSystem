@@ -122,4 +122,14 @@ router.post('/setRepairman', async function(ctx, next) {
   }
 })
 
+router.post('/deleteRepairlog', async function(ctx, next) {
+  const { logId } = ctx.request.body;
+  await repairlogModule.deleteRepairlog(logId)
+
+  return ctx.body = {
+    status: 'success'
+  }
+})
+
+
 module.exports = router
