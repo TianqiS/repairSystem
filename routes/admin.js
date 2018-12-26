@@ -114,7 +114,7 @@ router.post('/setRepairman', async function(ctx, next) {
     repairman_id: repairmanId
   });
   await repairlogModule.updateRepairlog(logId, {
-    repairman_id: repaimanId
+    repairman_id: repairmanId
   });
 
   return ctx.body =  {
